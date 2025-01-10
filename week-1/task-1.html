@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" type="text/css" href="layout.css"/>
+    <title>Task-1-RWD</title>
+</head>
+<body>
+    <nav>
+        <div class="left">My Website</div>
+        <div class="desktop-item">
+            <div class="item">Item 1</div>
+            <div class="item">Item 2</div>
+            <div class="item">Item 3</div>
+            <div class="item">Item 4</div>
+        </div>
+        <div class="mobile-menu">
+            <img src="imgs/menu.png" width="25">
+        </div>
+        <div class="mobile-item-list">
+            <span class="cross">X</span>
+            <div class="item">
+                <div class="a">Item 1</div>
+                <div class="a">Item 2</div>
+                <div class="a">Item 3</div>
+                <div class="a">Item 4</div>
+            </div>
+        </div>
+    </nav>
+    <div class="welcome">
+        <div class="welcome_text">Welcome to MyHome</div>
+    </div>
+    <div class="frame">
+        <div class="small-box s1">
+            <img src="imgs/scene.jpg" width="80px" height="50px">
+            <div class="text">Promotion 1</div>
+        </div>
+        <div class="small-box s2">
+            <img src="imgs/scene.jpg" width="80px" height="50px">
+            <div class="text">Promotion 2</div>
+        </div>
+        <div class="small-box s3">
+            <img src="imgs/scene.jpg" width="80px" height="50px">
+            <div class="text">Promotion 3</div>
+        </div>
+        <div class="big-box b1">
+            <div class="star"> 
+                <img src="imgs/star.png" width="30px">
+            </div>
+            <div class="title">Title 1</div> 
+        </div>
+        <div class="big-box b2">
+            <div class="star"> 
+                <img src="imgs/star.png" width="30px">
+            </div>
+            <div class="title">Title 2</div> 
+        </div>
+        <div class="big-box b3">
+            <div class="star"> 
+                <img src="imgs/star.png" width="30px">
+            </div>
+            <div class="title">Title 3</div> 
+        </div>
+        <div class="big-box b4">
+            <div class="star"> 
+                <img src="imgs/star.png" width="30px">
+            </div>
+            <div class="title">Title 4</div> 
+        </div>
+        <div class="big-box b5">
+            <div class="star"> 
+                <img src="imgs/star.png" width="30px">
+            </div>
+            <div class="title">Title 5</div> 
+        </div>
+        <div class="big-box b6">
+            <div class="star"> 
+                <img src="imgs/star.png" width="30px">
+            </div>
+            <div class="title">Title 6</div> 
+        </div>
+        <div class="big-box b7">
+            <div class="star"> 
+                <img src="imgs/star.png" width="30px">
+            </div>
+            <div class="title">Title 7</div> 
+        </div>
+        <div class="big-box b8">
+            <div class="star"> 
+                <img src="imgs/star.png" width="30px">
+            </div>
+            <div class="title">Title 8</div> 
+        </div>
+        <div class="big-box b9">
+            <div class="star"> 
+                <img src="imgs/star.png" width="30px">
+            </div>
+            <div class="title">Title 9</div> 
+        </div>
+        <div class="big-box b10">
+            <div class="star"> 
+                <img src="imgs/star.png" width="30px">
+            </div>
+            <div class="title">Title 10</div> 
+        </div>
+    </div>
+
+    <script>      
+        const elem_show = document.querySelector(".mobile-menu");
+        elem_show.addEventListener("click", () =>{
+            var show = document.querySelector(".mobile-item-list");
+            show.style.display = "block";
+        })
+        const elem_disappear = document.querySelector(".cross");
+        elem_disappear.addEventListener("click", () =>{
+            var disappear = document.querySelector(".mobile-item-list");
+            disappear.style.display = "none";
+        })
+    </script>
+</body>
+</html>
