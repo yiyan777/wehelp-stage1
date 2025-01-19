@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>task3-js</title>
+</head>
+<body>
+<script>    
+    function func(...data) {
+        let storage = [];
+
+        for (let i of data) {
+            if (i.length === 1 || i.length > 5) {
+                console.log("請正確輸入2至5位數的中文名字");
+                return;
+            }
+        }
+
+        for (let i of data) {
+            if (i.length === 2) {
+                storage.push([i, i.slice(1, 2)]);
+            } else if (i.length === 3) {
+                storage.push([i, i.slice(1, 2)]);
+            } else if (i.length === 4) {
+                storage.push([i, i.slice(2, 3)]);
+            } else if (i.length === 5) {
+                storage.push([i, i.slice(2,3)]);
+            }
+        }
+        // console.log(storage)
+        let tem = [];
+        let result = [];
+
+        for (let [name, key_word] of storage) {
+            tem.push(key_word);
+        }
+        // console.log(tem);
+
+        for (let [name, key_word] of storage) {
+            if (tem.filter(k => k === key_word).length === 1) {
+                result.push(name);
+            }
+        }
+        // console.log(result);
+
+        if (result.length === 0) {
+            console.log("沒有");
+        } else if (result.length >= 1) {
+            for (let i of result) {
+                console.log(i);
+            }
+        }
+    }
+
+func("彭大牆", "陳王明雅", "吳明"); // print 彭大牆
+func("郭靜雅", "王立強", "郭林靜宜", "郭立恆", "林花花"); //  林花花
+func("郭宣雅", "林靜宜", "郭宣恆", "林靜花"); //  沒有
+func("郭宣雅", "夏曼藍波安", "郭宣恆"); //  夏曼藍波安
+
+</script>
+</body>
+</html>

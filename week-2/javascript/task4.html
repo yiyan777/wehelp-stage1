@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>task4-js</title>
+</head>
+<body>
+    <script>    
+        function find_a_ans(an){    //求an的值
+            let a1 = 4;
+            let d = 7;
+            let ans = a1+ (an-1)*7;
+            return ans
+        }
+        function find_b_ans(bn){    //求bn的值
+            let b1 = 8;
+            let d = 7;
+            // bn = int(bn)
+            let ans = b1+ (bn-1)*7;
+            return ans
+        }
+        function find_c_ans(cn){    //求cn的值
+            let c1 = 7;
+            let d = 7;
+            let ans = c1+ (cn-1)*7;
+            return ans
+        }
+        function get_number(index){
+            let q = Math.floor(index/3);   //將index對3求商數
+            let r = index % 3;    // 將index對3求餘數
+            if (r == 1){   // 餘數為1的狀況
+                q++;
+                let s = find_a_ans(q);
+                console.log("您查找的index是", index,"，答案是", s);
+            }else if (r == 2){     // 餘數為2的狀況
+                q++;
+                let s = find_b_ans(q);
+                console.log("您查找的index是", index,"，答案是", s);     
+            }else{       // 餘數為其他(0)的狀況
+                let s = find_c_ans(q);
+                console.log("您查找的index是", index,"，答案是", s);
+            }             
+        }
+
+        get_number(1);
+        get_number(5);
+        get_number(10);
+        get_number(30);
+    </script>
+</body>
+</html>

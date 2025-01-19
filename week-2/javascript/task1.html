@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>task1-js</title>
+</head>
+<body>
+<script>
+    const stationMap = {
+    "Songshan": ["Nanjing Sanmin"],
+    "Nanjing Sanmin": ["Songshan", "Taipei Arena"],
+    "Taipei Arena": ["Nanjing Sanmin", "Nanjing Fuxing"],
+    "Nanjing Fuxing": ["Taipei Arena", "Songjiang Nanjing"],
+    "Songjiang Nanjing": ["Nanjing Fuxing", "Zhongshan"],
+    "Zhongshan": ["Songjiang Nanjing", "Beimen"],
+    "Beimen": ["Zhongshan", "Ximen"],
+    "Ximen": ["Beimen", "Xiaonanmen"],
+    "Xiaonanmen": ["Ximen", "Chiang Kai-Shek Memorial Hall"],
+    "Chiang Kai-Shek Memorial Hall": ["Xiaonanmen", "Guting"],
+    "Guting": ["Chiang Kai-Shek Memorial Hall", "Taipower Building"],
+    "Taipower Building": ["Guting", "Gongguan"],
+    "Gongguan": ["Taipower Building", "Wanlong"],
+    "Wanlong": ["Gongguan", "Jingmei"],
+    "Jingmei": ["Wanlong", "Dapinglin"],
+    "Dapinglin": ["Jingmei", "Qizhang"],
+    "Qizhang": ["Xiaobitan", "Xindian City Hall"],
+    "Xiaobitan": ["Qizhang"],
+    "Xindian City Hall": ["Qizhang", "Xindian"],
+    "Xindian": ["Xindian City Hall"]
+};
+
+    const messages = {
+    "Leslie": "I'm at home near Xiaobitan station.",     // Xiaobitan    小碧潭
+    "Bob": "I'm at Ximen MRT station.",                  // Ximen        西門
+    "Mary": "I have a drink near Jingmei MRT station.",  // Jingmei      景美
+    "Copper": "I just saw a concert at Taipei Arena.",   // Taipei Arena 台北小巨蛋
+    "Vivian": "I'm at Xindian station waiting for you."  // Xindian      新店
+};
+
+    for (const [name, info] of Object.entries(messages)) {
+        for (const station of Object.keys(stationMap)) {
+            if (info.includes(station)) {
+                messages[name] = station;
+                break;
+            }
+        }
+    }
+
+    function bfs(graph, start) {
+        const visited = new Set();
+        const queue = [[start, 0]];
+        const distances = {};
+
+        while (queue.length > 0) {
+            const [current, distance] = queue.shift();
+            if (visited.has(current)) continue;
+            visited.add(current);
+            distances[current] = distance;
+            for (const neighbor of graph[current]) {
+                if (!visited.has(neighbor)) {
+                    queue.push([neighbor, distance + 1]);
+                }
+            }
+        }
+        return distances;
+    }
+
+    function findAndPrint(messages, currentStation) {
+        const dis = bfs(stationMap, currentStation);
+        let nearestFriend = null;
+        let shortestDistance = Infinity;
+
+        for (const [friend, spot] of Object.entries(messages)) {
+            if (dis[spot] !== undefined && dis[spot] < shortestDistance) {
+                nearestFriend = friend;
+                shortestDistance = dis[spot];
+            }
+        }
+        console.log(nearestFriend);
+    }
+
+    findAndPrint(messages, "Wanlong");
+    findAndPrint(messages, "Songshan");
+    findAndPrint(messages, "Qizhang");
+    findAndPrint(messages, "Ximen");
+    findAndPrint(messages, "Xindian City Hall");
+
+</script>
+</body>
+</html>

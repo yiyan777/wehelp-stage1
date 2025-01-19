@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>task2-js</title>
+</head>
+<body>
+<script>
+    const consultants = [
+    { name: "John", rate: 4.5, price: 1000 },
+    { name: "Bob", rate: 3, price: 1200 },
+    { name: "Jenny", rate: 3.8, price: 800 }
+];
+
+    const scheduleTime = {};
+    consultants.forEach(consultant => {
+        scheduleTime[consultant.name] = [];
+    });
+
+    function book(consultants, hour, duration, criteria) {
+        let sortedConsultants;
+        if (criteria === "rate") {
+            sortedConsultants = [...consultants].sort((a, b) => b.rate - a.rate);
+        } else if (criteria === "price") {
+            sortedConsultants = [...consultants].sort((a, b) => a.price - b.price);
+        } else {
+            console.log("Invalid criteria");
+            return;
+        }
+
+        for (const consultant of sortedConsultants) {
+            const name = consultant.name;
+
+            if (scheduleTime[name].length === 0) {
+                console.log(name);
+                scheduleTime[name].push([hour, duration]);
+                return;
+            }
+
+            const scheduleTimeExpand = scheduleTime[name].flatMap(([start, dur]) =>
+                Array.from({ length: dur }, (_, i) => start + i)
+            );
+
+            const requestedTime = Array.from({ length: duration }, (_, i) => hour + i);
+            const overlap = scheduleTimeExpand.some(time => requestedTime.includes(time));
+
+            if (!overlap) {
+                console.log(name);
+                scheduleTime[name].push([hour, duration]);
+                return;
+            }
+        }
+
+        console.log("no service");
+    }
+
+book(consultants, 15, 1, "price"); // Jenny
+book(consultants, 11, 2, "price"); // Jenny
+book(consultants, 10, 2, "price"); // John
+book(consultants, 20, 2, "rate"); // John
+book(consultants, 11, 1, "rate"); // Bob
+book(consultants, 11, 2, "rate"); // No Service
+book(consultants, 14, 3, "price"); // John
+
+</script>
+</body>
+</html>
