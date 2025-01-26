@@ -35,7 +35,7 @@ def getData(url):
     
     root = bs4.BeautifulSoup(data, "html.parser")
     titles = root.find_all("div", class_="title") #列表型態
-    with open("article.csv", "w", encoding="utf-8") as file:
+    with open("article.csv", "a", encoding="utf-8") as file:
         for title in titles:
             if title.a != None:
                 titleText = title.a.string
@@ -55,4 +55,3 @@ count = 0
 while count <3:
     pageURL ="https://www.ptt.cc" + getData(pageURL)
     count+=1
-
