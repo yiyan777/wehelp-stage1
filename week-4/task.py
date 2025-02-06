@@ -1,4 +1,4 @@
-from fastapi import FastAPI, Form, Path, Query
+from fastapi import FastAPI, Form, HTTPException, Path, Query
 from fastapi import Request
 from fastapi.responses import *
 from fastapi.templating import Jinja2Templates
@@ -40,8 +40,14 @@ async def logout(request: Request):
 async def error(request: Request, message: str = "發生錯誤"):
     return templates.TemplateResponse("signin-fail.html", {"request": request, "message":message})
 
-@app.get("/square")
-def square(num, request: Request):
-    num = int(num)
+@app.get("/square/{num}")
+async def square(num: str, request: Request):
+    try:
+        num = int(num)
+    except ValueError:
+        raise HTTPException(status_code=400, detail="Invalid input: Please enter a positive integer.")
+    if num <= 0:
+        raise HTTPException(status_code=400, detail="Invalid input: Please enter a positive integer.")
+
     num = num**2
     return templates.TemplateResponse("square.html", {"request": request, "num":num})

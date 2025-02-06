@@ -83,7 +83,7 @@
         </form>
         <br> <hr>
         <div class="signin_system_text">計算正整數的平方</div>
-        <form method="get" action="/square">
+        <form id="square-form">
             <div class="number">正整數 <input id="num" type="text" name="num" placeholder=" 請輸入正整數" style="width: 300px;"></div> <br>
             <div class="cal_btn"><input id="the_btn_cal" type="submit" value="計算"></div>
         </form>
@@ -99,16 +99,20 @@
             }
         });
 
-        const the_btn_cal = document.getElementById("the_btn_cal");
-        the_btn_cal.addEventListener("click", function(event){
+        const square_form = document.getElementById("square-form");
+        square_form.addEventListener("submit", function(event) {
+            event.preventDefault();  // 阻止表單預設提交動作
             let num = document.getElementById("num").value;
-            num = Number(num); 
-            if (num <= 0 || Number.isInteger(num) == false){
-                event.preventDefault(); //阻止提交表單
-                window.alert("Please enter a positive number");
+            num = Number(num);
+
+            if (num <= 0 || Number.isInteger(num) != true ) {
+                alert("Please enter a positive integer");
                 document.getElementById("num").value = "";
+            } else {
+                window.location.href = `/square/${num}`;
             }
         });
+
     </script>  
 </body>
 
