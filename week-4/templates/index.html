@@ -4,73 +4,13 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>week4-task</title>
-    <style>
-        body, html{
-            margin: 0;
-            padding: 0;
-            overflow-x: hidden;
-        }
-        nav{
-            display: flex;
-            border: solid 1px black;
-            background-color: #163b60;
-            color: aliceblue;
-            height: 100px;
-            font-size: 40px;
-            font-weight: bold;
-            justify-content: center;
-            align-items: center;
-        }
-        input{
-            height: 30px;
-            vertical-align: middle;
-            font-size: 18px;
-        }
-        .signin_system_text{
-            text-align: center;
-            font-size: 30px;
-            margin-top: 22px;
-            margin-bottom: 16px;
-            transform: translate(10px);
-        }
-        .account{
-            font-size: 20px;
-            text-align: center;
-        }
-        .password{
-            font-size: 20px;
-            text-align: center;
-            margin-bottom: 8px;
-        }
-        .agree{
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            font-size: 20px;
-            text-align: center;
-            transform: translate(8px); 
-            margin-bottom: 5px;
-        }
-        .signin_btn{
-            text-align: center;
-        }
-        .cal_btn{
-            text-align: center;
-        }
-
-        .number{
-            font-size: 20px;
-            text-align: center;
-        }
-    </style>
-    
+    <link rel="stylesheet" type="text/css" href="/static/css/index.css">
 </head>
 <body>
     <nav>
         <div class="welcome">歡迎光臨，請輸入帳號密碼</div>
     </nav>
     <main>
-        
         <div class="signin_system_text">登入系統</div>
         <form method="post" action="/signin">
             <div class="account">帳號 <input type="text" name="username" style="width: 300px;"></div> <br>
@@ -88,32 +28,7 @@
             <div class="cal_btn"><input id="the_btn_cal" type="submit" value="計算"></div>
         </form>
     </main>
-    <script>
-        const the_btn = document.getElementById("the_btn");
-        the_btn.addEventListener("click", function(event){
-            const the_checkbox = document.getElementById("the_checkbox");
-            // console.log(the_checkbox.checked);
-            if (the_checkbox.checked == false){
-                event.preventDefault(); //阻止提交表單
-                window.alert("Please check the checkbox first");
-            }
-        });
-
-        const square_form = document.getElementById("square-form");
-        square_form.addEventListener("submit", function(event) {
-            event.preventDefault();  // 阻止表單預設提交動作
-            let num = document.getElementById("num").value;
-            num = Number(num);
-
-            if (num <= 0 || Number.isInteger(num) != true ) {
-                alert("Please enter a positive integer");
-                document.getElementById("num").value = "";
-            } else {
-                window.location.href = `/square/${num}`;
-            }
-        });
-
+    <script src="/static/js/index.js">  
     </script>  
 </body>
-
 </html>

@@ -4,8 +4,10 @@ from fastapi.responses import *
 from fastapi.templating import Jinja2Templates
 from typing import Annotated
 from starlette.middleware.sessions import SessionMiddleware
+from fastapi.staticfiles import StaticFiles
 
 app=FastAPI()
+app.mount("/static", StaticFiles(directory="static"), name="static")
 app.add_middleware(SessionMiddleware, secret_key="your_secret_key")  # secret_key 用於加密 session
 
 templates = Jinja2Templates(directory="templates")
