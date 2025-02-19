@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>week6-task</title>
+    <link rel="stylesheet" type="text/css" href="/static/css/signin-success.css">
+</head>
+<body>
+    <nav>
+        <div class="welcome">歡迎光臨，這是會員頁</div>
+    </nav>
+    <div class="text">{{name}}您好，歡迎登入系統</div>
+    <div class="signout_btn">
+        <a href="/signout" style="font-size: 24px; text-decoration: none; color: blue;">登出系統</a>
+    </div>
+    <hr>
+    <div class="leave_message">快來留言吧</div>
+    <form method="post" action="/createMessage">
+        <div class="leave_message_text">內容 <input type="text" name="content" style="width: 300px; font-size: 18px;" required></div> <br>
+        <div class="handin_btn"><input type="submit" value="送出"></div>
+    </form>
+    <hr>
+    <div class="messages">
+        {% for username, content in messages %}
+            <div class="message"><b>{{username}}</b> : {{content}} </div>
+        {% endfor %}
+    </div>
+
+</html>
