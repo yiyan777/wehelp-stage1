@@ -67,6 +67,7 @@ async def signin(request: Request, username: str = Form(...), password: str = Fo
     
 @app.get("/member")
 async def member(request: Request):
+    name = request.session.get("name")
     username = request.session.get("username")
     if not username:  # 如果沒有登入，導回登入頁面
         return RedirectResponse("/", status_code=302)
@@ -78,14 +79,12 @@ async def member(request: Request):
         database="website"
     )
     cursor = con.cursor()
-    cursor.execute("SELECT name FROM member WHERE username = %s", (username,))
-    user = cursor.fetchone()
     cursor.execute("SELECT member.username, message.content FROM member INNER JOIN message ON member.id = message.member_id ORDER BY message.id DESC")
     messages = cursor.fetchall()
     # print(messages)
     con.close()
     return templates.TemplateResponse("signin-success.html", 
-    {"request": request, "name": user[0], "messages": messages})
+    {"request": request, "name": name, "messages": messages})
 
 @app.get("/signout")
 async def logout(request: Request):
