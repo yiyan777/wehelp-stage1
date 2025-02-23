@@ -67,6 +67,8 @@ async def signin(request: Request, username: str = Form(...), password: str = Fo
     
 @app.get("/member")
 async def member(request: Request):
+    member_id = request.session.get("member_id")
+    print(type(member_id))
     name = request.session.get("name")
     username = request.session.get("username")
     if not username:  # 如果沒有登入，導回登入頁面
@@ -79,12 +81,12 @@ async def member(request: Request):
         database="website"
     )
     cursor = con.cursor()
-    cursor.execute("SELECT member.username, message.content FROM member INNER JOIN message ON member.id = message.member_id ORDER BY message.id DESC")
+    cursor.execute("SELECT message.id, member.username, message.content, message.member_id FROM member INNER JOIN message ON member.id = message.member_id ORDER BY message.id DESC")
     messages = cursor.fetchall()
     # print(messages)
     con.close()
     return templates.TemplateResponse("signin-success.html", 
-    {"request": request, "name": name, "messages": messages})
+    {"request": request, "name": name, "messages": messages, "member_id": member_id})
 
 @app.get("/signout")
 async def logout(request: Request):
@@ -115,6 +117,27 @@ async def createMessage(request: Request, content: str = Form(...)):
     con.close()
     return RedirectResponse("/member", status_code=302) # 重新導向回會員頁面，讓使用者看到最新留言
 
-@app.get("/createMessage") # 若使用者在URL手動輸入http://127.0.0.1:8000/createMessage，則導回首頁
-async def create_message_error():
-    return RedirectResponse("/", status_code=302)
+@app.post("/deleteMessage")
+async def delete_message(request: Request, message_id: int = Form(...)):
+    member_id = request.session.get("member_id")
+    if not member_id:  # 未登入則導回首頁
+        return RedirectResponse("/", status_code=302)
+    
+    con = mysql.connector.connect(
+        user="root",
+        password="123456",
+        host="localhost",
+        database="website"
+    )
+    cursor = con.cursor()
+    
+    # 確保該訊息是當前登入者的
+    cursor.execute("SELECT id FROM message WHERE id = %s AND member_id = %s", (message_id, member_id))
+    message = cursor.fetchone()
+
+    if message:
+        cursor.execute("DELETE FROM message WHERE id = %s", (message_id,))
+        con.commit()
+
+    con.close()
+    return RedirectResponse("/member", status_code=302)

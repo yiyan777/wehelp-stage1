@@ -20,11 +20,26 @@
         <div class="leave_message_text">內容 <input type="text" name="content" style="width: 300px; font-size: 18px;" required></div> <br>
         <div class="handin_btn"><input type="submit" value="送出"></div>
     </form>
-    <hr>
+    <br>
     <div class="messages">
-        {% for username, content in messages %}
-            <div class="message"><b>{{username}}</b> : {{content}} </div>
+        {% for message_id, username, content, msg_member_id in messages %}
+            <div class="message">
+                <div class="username-text">
+                    <b>{{username}}</b> : {{content}}
+                </div>
+                {% if msg_member_id == member_id %}
+                    <form class="delete-form" method="post" action="/deleteMessage" onsubmit="return confirmDelete();">
+                        <input type="hidden" name="message_id" value="{{message_id}}">
+                        <button class="delete-btn" type="submit">X</button>
+                    </form>
+                {% endif %}
+            </div>
         {% endfor %}
     </div>
-
+    <script>
+        function confirmDelete(){
+            return confirm("確定要刪除這則留言嗎？")
+        }
+    </script>
+</body>
 </html>
